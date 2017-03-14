@@ -1,0 +1,17 @@
+home:
+  path: /home
+  defaults: { _controller: IdeasBundle:Ideas:home}
+
+ideas_list:
+  path: /ideas
+  defaults: { _controller: IdeasBundle:Ideas:list}
+
+ideas_add:
+  path: /ideas/add
+  defaults: { _controller: IdeasBundle:Ideas:add, _format: html }
+
+ideas_show:
+  path: /ideas/{idea}.{_format}
+  defaults: { _controller: IdeasBundle:Ideas:show, _format: html}
+
+

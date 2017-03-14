@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <header>
+            {% block navigation %}
+            <nav>
+                <ul>
+                    <li><a href="{{ path('home') }}">Home</a></li>
+                    <li><a href="{{ path('ideas_list') }}">Ideas</a></li>
+                    <li><a href="{{ path('ideas_add') }}">Add Idea</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contacts">Contacts</a></li>
+                </ul>
+            </nav>
+            {% endblock %}
+        </header>
+        <div id="content">
+            {% block body %}
+
+
+            {% endblock %}
+        </div>
+
+
+        {% block javascripts %}
+
+        {% endblock %}
+    </body>
+</html>

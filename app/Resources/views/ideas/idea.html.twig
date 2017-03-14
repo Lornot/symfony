@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ idea_title }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ idea_title | upper }}</h1>
+    <h2>{{ idea_subtitle }}</h2>
+    <p>{{ idea_description }}</p>
+    <img src="{{ absolute_url(asset( idea_image )) }}" alt="">
+{% endblock %}
