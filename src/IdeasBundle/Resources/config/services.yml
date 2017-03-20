@@ -1,0 +1,4 @@
+services:
+#    ideas.example:
+#        class: IdeasBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

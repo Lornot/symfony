@@ -1,9 +1,9 @@
 <?php
 
-    namespace IdeasBundle;
+namespace IdeasBundle;
 
-    use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-    class IdeasBundle extends Bundle
-    {
-    }
+class IdeasBundle extends Bundle
+{
+}

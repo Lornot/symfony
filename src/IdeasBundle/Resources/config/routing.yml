@@ -1,0 +1,3 @@
+ideas_homepage:
+    path:     /
+    defaults: { _controller: IdeasBundle:Default:index }

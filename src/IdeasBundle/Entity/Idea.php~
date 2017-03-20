@@ -22,7 +22,12 @@ class Idea
 
     /**
      * @Assert\NotBlank()
-     * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 10,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      */
     protected $title;
 
@@ -45,17 +50,7 @@ class Idea
      */
     public function getId()
     {
-        return $this -> id;
-    }
-
-    /**
-     * Set id
-     *
-     * @return integer
-     */
-    public function setId()
-    {
-        return $this ->id;
+        return $this->id;
     }
 
     public function getIdea() {

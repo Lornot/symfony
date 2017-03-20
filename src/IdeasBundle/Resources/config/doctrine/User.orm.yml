@@ -1,0 +1,37 @@
+IdeasBundle\Entity\User:
+    type: entity
+    table: users
+    repositoryClass: IdeasBundle\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        firstName:
+            type: string
+            length: '128'
+            column: first_name
+        lastName:
+            type: string
+            length: 255
+            column: last_name
+        email:
+            type: string
+            length: 255
+        password:
+            type: string
+            length: 255
+        created_at:
+            type: datetime
+        lastLoginAt:
+            type: datetime
+            nullable: true
+            column: last_login_at
+        status:
+            type: smallint
+        activatedHash:
+            type: string
+            length: 64
+    lifecycleCallbacks: {  }

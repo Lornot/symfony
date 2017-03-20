@@ -14,4 +14,8 @@ ideas_show:
   path: /ideas/{idea}.{_format}
   defaults: { _controller: IdeasBundle:Ideas:show, _format: html}
 
+ideas_update:
+  path: /ideas/update/{idea_id}
+  defaults: { _controller: IdeasBundle:Ideas:update }
+
 

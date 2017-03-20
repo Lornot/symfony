@@ -7,16 +7,8 @@
 {% block body %}
     <h1>Ideas List:</h1>
     <ul>
-        {% for idea in ideas | sort %}
-            <li><a href="{{ idea.href | e }}">{{ idea.text }}</a></li>
+        {% for idea in ideas %}
+            <li><a href="{{ path('ideas_show', {'idea' : idea.id}, []) }}">{{ idea.title}}</a></li>
         {% endfor %}
     </ul>
-    <div>
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'ideas_add_form'}}) }}
-
-        {#{{ form(form, {'attr': {'novalidate': 'novalidate'}}  ) }}#}
-
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </div>
 {% endblock %}

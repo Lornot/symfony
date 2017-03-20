@@ -3,15 +3,10 @@
     namespace IdeasBundle\Controller;
 
     use IdeasBundle\Entity\Idea;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use IdeasBundle\Form\IdeaType;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Config\Definition\Exception\Exception;
-    use Symfony\Component\Form\Extension\Core\Type\CountryType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    use Symfony\Component\HttpFoundation\Response;
 
     class IdeasController extends Controller {
 
@@ -20,44 +15,16 @@
         }
 
         public function listAction(Request $request) {
-            $urls = [
-                'babysitter_finding',
-                'trucker_driving_supporting',
-                'learning_app'
-            ];
 
-            $ideas = array_map(function($idea){
-                return [
-                    'href' => $this -> generateUrl('ideas_show', ['idea' => $idea]),
-                    'text' => $idea
-                ];
-            }, $urls);
+            $ideas_repository = $this -> getDoctrine() -> getRepository('IdeasBundle:Idea');
 
-            $idea = new Idea();
-            $idea -> setIdea('Portal for home masters');
-            $idea -> setTitle('masterok');
-            $idea -> setDescription('Home master can get the work');
-            $idea -> setCreatedAt(new \DateTime());
-
-            $form = $this -> createFormBuilder($idea)
-                -> add('idea', TextType::class)
-                -> add('title', TextType::class)
-                -> add('description', TextType::class)
-                -> add('created_at', DateType::class)
-                -> add('countries', CountryType::class, ['label' => 'Country'])
-                -> add('save', SubmitType::class, ['label' => 'Create idea'])
-                -> getForm();
-
-            $form -> handleRequest($request);
-
-            if ($form -> isSubmitted() && $form -> isValid()) {
-                $idea = $form -> getData();
-                
-            }
+            $ideas = $ideas_repository -> findBy(
+                [],
+                ['title' => 'ASC']
+            );
 
             $options = [
                 'ideas' => $ideas,
-                'form'  => $form -> createView()
             ];
 
             return $this -> render('ideas/list.html.twig', $options);
@@ -65,33 +32,39 @@
 
         public function showAction($idea){
 
+            $repository = $this -> getDoctrine() -> getRepository('IdeasBundle:Idea');
+
+            $idea = $repository -> find($idea);
+
+            if (!$idea) {
+                throw $this -> createNotFoundException(
+                    'No idea found for id '.$idea
+                );
+            }
+
             return $this -> render('ideas/idea.html.twig', [
-                'idea_title' => $idea,
-                'idea_subtitle' => '',
-                'idea_description' => 'Great idea',
-                'idea_image' => 'images/'.$idea.'.jpg'
+                'idea_title' => $idea -> getTitle(),
+                'idea_description' => $idea -> getDescription(),
+                'idea_created_at' => $idea -> getCreatedAt() -> format('d.m.Y'),
+                'idea_id' => $idea -> getId()
             ]);
         }
 
         public function addAction(Request $request) {
             $idea = new Idea();
-            $idea -> setIdea('Portal for home masters');
-            $idea -> setTitle('masterok');
-            $idea -> setDescription('Home master can get the work');
             $idea -> setCreatedAt(new \DateTime());
 
-            $form = $this -> createFormBuilder($idea)
-                -> add('idea', TextType::class)
-                -> add('title', TextType::class)
-                -> add('description', TextareaType::class)
-                -> add('created_at', DateType::class)
-                -> add('save', SubmitType::class, ['label' => 'Create idea'])
-                -> getForm();
+            $form = $this -> createForm(IdeaType::class, $idea);
 
             $form -> handleRequest($request);
 
             if ($form -> isSubmitted() && $form -> isValid()) {
                 $idea = $form -> getData();
+
+                /** Апдейт бази даних*/
+                $em = $this -> getDoctrine() -> getManager();
+                $em -> persist($idea);
+                $em -> flush();
 
                 $this -> addFlash('notice', 'Success');
                 return $this -> redirectToRoute('ideas_list');
@@ -102,4 +75,29 @@
             ]);
         }
 
+        public function updateAction($idea_id, Request $request) {
+            
+            $idea = new Idea();
+            $form = $this -> createForm(IdeaType::class, $idea);
+            $form -> handleRequest($request);
+            if ($form -> isSubmitted() && $form -> isValid()) {
+                $idea = $form -> getData();
+                $manager = $this -> getDoctrine() -> getManager();
+                $manager -> persist($idea);
+                $manager -> flush();
+                return $this -> redirectToRoute('ideas_list');
+            } else {
+                $repository = $this -> getDoctrine() -> getRepository('IdeasBundle:Idea');
+                $idea = $repository -> find($idea_id);
+                if(!$idea) {
+                    throw $this -> createNotFoundException(
+                        'No idea is found for id '.$idea
+                    );
+                }
+            }
+
+            return $this -> render('ideas/update.html.twig', [
+                'form' => $form -> createView()
+            ]);
+        }
     }
