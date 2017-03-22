@@ -13,12 +13,7 @@ class Idea
     /**
      * @var integer
      */
-    private $id;
-
-    /**
-     * @Assert\NotBlank()
-     */
-    protected $idea;
+    protected $id;
 
     /**
      * @Assert\NotBlank()
@@ -57,14 +52,7 @@ class Idea
     {
         return $this ->id;
     }
-
-    public function getIdea() {
-        return $this -> idea;
-    }
-
-    public function setIdea($idea) {
-        $this -> idea = $idea;
-    }
+    
 
     public function getTitle() {
         return $this -> title;

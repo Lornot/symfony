@@ -16,7 +16,6 @@
         public function buildForm(FormBuilderInterface $builder, array $options) {
             
             $builder
-                -> add('idea')
                 -> add('title', null, [
                     'required' => false,
                     'attr' => [

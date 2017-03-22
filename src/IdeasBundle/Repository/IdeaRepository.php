@@ -10,4 +10,26 @@ namespace IdeasBundle\Repository;
  */
 class IdeaRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findLast5daysIdeas() {
+
+        $manager = $this -> getEntityManager();
+
+//        $query = $manager -> createQueryBuilder('idea')
+//            -> where('idea.created_at > :created_at')
+//            -> setParameter('created_at', '2017-03-17 00:00:00')
+//            -> orderBy('idea.title', 'ASC')
+//            -> getQuery();
+
+        
+        $ideas = $manager -> createQuery(
+            'SELECT idea FROM IdeasBundle:Idea idea ORDER BY idea.title ASC'
+        ) -> getResult();
+
+        //$ideas = $query -> getResult();
+        return $ideas;
+    }
+
+
+
 }

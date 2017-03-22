@@ -23,6 +23,15 @@
                 ['title' => 'ASC']
             );
 
+            $manager = $this -> getDoctrine() -> getManager();
+            $ideas = $manager -> getRepository('IdeasBundle:Idea') -> findLast5daysIdeas();
+
+            $newsLetterManager = $this -> get('app.newsletter_manager');
+
+            echo "<pre>";
+            var_dump($newsLetterManager);
+            echo "</pre>";
+
             $options = [
                 'ideas' => $ideas,
             ];
@@ -75,29 +84,54 @@
             ]);
         }
 
-        public function updateAction($idea_id, Request $request) {
+        public function updateAction(Request $request, $idea_id) {
             
             $idea = new Idea();
             $form = $this -> createForm(IdeaType::class, $idea);
+
             $form -> handleRequest($request);
+
             if ($form -> isSubmitted() && $form -> isValid()) {
                 $idea = $form -> getData();
                 $manager = $this -> getDoctrine() -> getManager();
-                $manager -> persist($idea);
+                $idea_from_db = $manager -> getRepository('IdeasBundle:Idea') -> find($idea_id);
+
+                $idea_from_db -> setTitle($idea -> getTitle());
+                $idea_from_db -> setDescription($idea -> getDescription());
+                $idea_from_db -> setCreatedAt($idea -> getCreatedAt());
+
                 $manager -> flush();
                 return $this -> redirectToRoute('ideas_list');
             } else {
                 $repository = $this -> getDoctrine() -> getRepository('IdeasBundle:Idea');
                 $idea = $repository -> find($idea_id);
+
                 if(!$idea) {
                     throw $this -> createNotFoundException(
                         'No idea is found for id '.$idea
                     );
                 }
+                $form = $this -> createForm(IdeaType::class, $idea);
             }
 
             return $this -> render('ideas/update.html.twig', [
                 'form' => $form -> createView()
             ]);
+        }
+
+        public function removeAction($idea_id) {
+
+            $manager = $this -> getDoctrine() -> getManager();
+            $idea = $manager -> getRepository('IdeasBundle:Idea') -> find($idea_id);
+            if (!$idea) {
+                throw $this -> createNotFoundException(
+                    'No idea is found for id'.$idea_id
+                );
+            }
+
+            $manager -> remove($idea);
+            $manager -> flush();
+
+            return $this -> redirectToRoute('ideas_list');
         }
     }

@@ -18,4 +18,8 @@ ideas_update:
   path: /ideas/update/{idea_id}
   defaults: { _controller: IdeasBundle:Ideas:update }
 
+ideas_remove:
+  path: /ideas/remove/{idea_id}
+  defaults: { _controller: IdeasBundle:Ideas:remove }
+
 
