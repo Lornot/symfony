@@ -8,6 +8,8 @@
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
 
+    //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
     class IdeasController extends Controller {
 
         public function homeAction() {
@@ -29,7 +31,7 @@
             $newsLetterManager = $this -> get('app.newsletter_manager');
 
             echo "<pre>";
-            var_dump($newsLetterManager);
+            print_r($newsLetterManager);
             echo "</pre>";
 
             $options = [
@@ -59,7 +61,17 @@
             ]);
         }
 
+        /**
+         * @param Request $request
+         * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+         * @Security("has_role('ROLE_ADMIN')")
+         */
         public function addAction(Request $request) {
+
+
+
+            //$this -> denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page');
+
             $idea = new Idea();
             $idea -> setCreatedAt(new \DateTime());
 

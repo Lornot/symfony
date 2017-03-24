@@ -3,7 +3,7 @@
 parameters:
 #    parameter_name: value
   app.mailer.transport: sendmail
-
+  app.newsletter_manager.logger: loggasdfer
 services:
 #    service_name:
 #        class: IdeasBundle\Directory\ClassName
@@ -15,4 +15,7 @@ services:
 
   app.newsletter_manager:
     class: IdeasBundle\Service\NewsLetterManager
-    arguments: ['@app.mailer']
+#    arguments: ['@app.mailer']
+    calls:
+     - [setMailer, ['@app.mailer']]
+     - [setLogger, ['%app.newsletter_manager.logger%']]

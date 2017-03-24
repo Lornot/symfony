@@ -22,4 +22,8 @@ ideas_remove:
   path: /ideas/remove/{idea_id}
   defaults: { _controller: IdeasBundle:Ideas:remove }
 
+admin:
+  path: /admin
+  defaults: { _controller: IdeasBundle:Default:admin }
+
 
