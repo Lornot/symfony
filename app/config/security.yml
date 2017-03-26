@@ -1,14 +1,16 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
-
+#    role_hierarchy:
+#      ROLE_ADMIN: ROLE_USER
+#      ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
             memory:
               users:
                 oleg:
-                  password: 12345
+                  password: $2y$12$NXnISGwmt7JVhmoUwRCJgeXi3bW/FvTfBcVd4TCXd5mHVeEUT0xju
                   roles: 'ROLE_ADMIN'
                 mariana:
                   password: $2y$12$owKAvsGnqG72phvkzE42JurRBQH.1oemQMSvP./PzvwSWz9INtPfu
@@ -25,6 +27,11 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+#        secured_area:
+#            # ...
+#            logout:
+#                path:   /logout
+#                target: /
 
 #        main:
 #            anonymous: ~

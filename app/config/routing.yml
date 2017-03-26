@@ -26,4 +26,6 @@ admin:
   path: /admin
   defaults: { _controller: IdeasBundle:Default:admin }
 
+logout:
+  path: /logout
 

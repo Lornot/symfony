@@ -3,13 +3,10 @@
     namespace IdeasBundle\Service;
 
     class Mailer {
+        protected $type;
 
         public function __construct($type){
-
-            echo "<pre>";
-            print_r($type);
-            echo "</pre>";
-
+            $this -> type = $type;
         }
 
         public function sendEmail() {

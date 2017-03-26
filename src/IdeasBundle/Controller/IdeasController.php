@@ -13,10 +13,16 @@
     class IdeasController extends Controller {
 
         public function homeAction() {
+
             return $this -> render('ideas/home.html.twig');
         }
 
         public function listAction(Request $request) {
+
+            if(!$this -> get('security.authorization_checker') -> isGranted('IS_AUTHENTICATED_FULLY'))
+                throw $this -> createAccessDeniedException();
+
+            $user = $this -> getUser();
 
             $ideas_repository = $this -> getDoctrine() -> getRepository('IdeasBundle:Idea');
 
@@ -29,11 +35,7 @@
             $ideas = $manager -> getRepository('IdeasBundle:Idea') -> findLast5daysIdeas();
 
             $newsLetterManager = $this -> get('app.newsletter_manager');
-
-            echo "<pre>";
-            print_r($newsLetterManager);
-            echo "</pre>";
-
+            
             $options = [
                 'ideas' => $ideas,
             ];
