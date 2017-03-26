@@ -14,6 +14,13 @@
 
         public function homeAction() {
 
+            $logger = $this -> get('logger');
+
+            $logger -> info('The idea was deleted');
+            //$logger -> error('An error occured');
+
+            //$logger -> critical('Delete has been occured with error', ['cause' => 'in_hurry']);
+
             return $this -> render('ideas/home.html.twig');
         }
 
@@ -35,7 +42,7 @@
             $ideas = $manager -> getRepository('IdeasBundle:Idea') -> findLast5daysIdeas();
 
             $newsLetterManager = $this -> get('app.newsletter_manager');
-            
+
             $options = [
                 'ideas' => $ideas,
             ];
@@ -66,12 +73,9 @@
         /**
          * @param Request $request
          * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-         * @Security("has_role('ROLE_ADMIN')")
+         * Security("has_role('ROLE_ADMIN')")
          */
         public function addAction(Request $request) {
-
-
-
             //$this -> denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page');
 
             $idea = new Idea();
@@ -88,6 +92,25 @@
                 $em = $this -> getDoctrine() -> getManager();
                 $em -> persist($idea);
                 $em -> flush();
+
+                /** Посилання емейлу */
+                $message = \Swift_Message::newInstance()
+                    -> setSubject('New idea')
+                    -> setFrom('ideas@gmail.com')
+                    -> setTo('veishen19@gmail.com')
+                    -> setBody(
+                        $this -> renderView(
+                            'Emails/new_idea_message.html.twig',
+                            [
+                                'name' => 'Oleg',
+                                'title' => $idea -> getTitle(),
+                                'description' => $idea -> getTitle()
+                            ]
+                        ),
+                        'text/html'
+                    );
+
+                $this -> get('mailer') -> send($message);
 
                 $this -> addFlash('notice', 'Success');
                 return $this -> redirectToRoute('ideas_list');
@@ -144,6 +167,13 @@
             }
 
             $manager -> remove($idea);
+
+            $logger = $this -> get('logger');
+
+            echo "<pre>";
+            print_r($logger);
+            echo "</pre>";
+
             $manager -> flush();
 
             return $this -> redirectToRoute('ideas_list');
