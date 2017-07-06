@@ -94,6 +94,7 @@
             $form -> handleRequest($request);
 
             if ($form -> isSubmitted() && $form -> isValid()) {
+
                 $idea = $form -> getData();
 
                 /** Апдейт бази даних*/

@@ -23,7 +23,13 @@
                         'pattern' => false
                     ]
                 ])
-                -> add('description', TextareaType::class)
+                -> add('description', TextareaType::class, [
+                    'required' => false,
+                    'attr' => [
+                        'min_length' => 2,
+                        'pattern' => false
+                    ]
+                ])
                 -> add('created_at', DateType::class)
                 -> add('save', SubmitType::class, ['label' => 'Create idea']);
 
