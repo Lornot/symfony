@@ -13,21 +13,11 @@ class Idea
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @Assert\NotBlank()
-     */
-    protected $idea;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 10,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
-     * )
+     * 
      */
     protected $title;
 
@@ -50,16 +40,19 @@ class Idea
      */
     public function getId()
     {
-        return $this->id;
+        return $this -> id;
     }
 
-    public function getIdea() {
-        return $this -> idea;
+    /**
+     * Set id
+     *
+     * @return integer
+     */
+    public function setId()
+    {
+        return $this ->id;
     }
-
-    public function setIdea($idea) {
-        $this -> idea = $idea;
-    }
+    
 
     public function getTitle() {
         return $this -> title;

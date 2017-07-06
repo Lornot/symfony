@@ -12,16 +12,24 @@
 
     class IdeasController extends Controller {
 
-        public function homeAction() {
+        public function overviewAction() {
 
-            $logger = $this -> get('logger');
+            $logger = $this->get('logger');
 
-            $logger -> info('The idea was deleted');
+            $logger->info('The idea was deleted');
             //$logger -> error('An error occured');
 
             //$logger -> critical('Delete has been occured with error', ['cause' => 'in_hurry']);
 
-            return $this -> render('ideas/home.html.twig');
+            $ideas_repository = $this->getDoctrine()->getRepository('IdeasBundle:Idea');
+            $ideas = $ideas_repository->findBy(
+                [],
+                ['title' => 'ASC']
+            );
+
+            return $this->render('IdeasBundle:Default:overview.html.twig', [
+                'ideas' => $ideas
+            ]);
         }
 
         public function listAction(Request $request) {
@@ -62,7 +70,7 @@
                 );
             }
 
-            return $this -> render('ideas/idea.html.twig', [
+            return $this -> render('IdeasBundle:Default:idea.html.twig', [
                 'idea_title' => $idea -> getTitle(),
                 'idea_description' => $idea -> getDescription(),
                 'idea_created_at' => $idea -> getCreatedAt() -> format('d.m.Y'),
@@ -113,10 +121,10 @@
                 $this -> get('mailer') -> send($message);
 
                 $this -> addFlash('notice', 'Success');
-                return $this -> redirectToRoute('ideas_list');
+                return $this -> redirectToRoute('overview');
             }
 
-            return $this -> render('ideas/add.html.twig', [
+            return $this -> render('IdeasBundle:Default:add.html.twig', [
                 'form' => $form -> createView()
             ]);
         }
@@ -170,12 +178,14 @@
 
             $logger = $this -> get('logger');
 
-            echo "<pre>";
-            print_r($logger);
-            echo "</pre>";
 
             $manager -> flush();
 
             return $this -> redirectToRoute('ideas_list');
+        }
+
+        public function aboutAction()
+        {
+            return $this->render('IdeasBundle:Default:about.html.twig');
         }
     }

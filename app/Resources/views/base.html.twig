@@ -13,7 +13,7 @@
             {% block navigation %}
             <nav>
                 <ul>
-                    <li><a href="{{ path('home') }}">Home</a></li>
+                    <li><a href="{{ path('overview') }}">Home</a></li>
                     <li><a href="{{ path('ideas_list') }}">Ideas</a></li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('ideas_add') }}">Add Idea</a></li>

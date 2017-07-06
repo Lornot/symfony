@@ -1,6 +1,6 @@
-home:
-  path: /home
-  defaults: { _controller: IdeasBundle:Ideas:home}
+overview:
+  path: /overview
+  defaults: { _controller: IdeasBundle:Ideas:overview}
 
 ideas_list:
   path: /ideas
@@ -29,3 +29,6 @@ admin:
 logout:
   path: /logout
 
+about:
+  path: /about
+  defaults: { _controller: IdeasBundle:Ideas:about}

@@ -47,9 +47,9 @@ security:
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
-      - { path: ^/ideas/update, roles: ROLE_ADMIN }
-      - { path: ^/ideas/delete, roles: ROLE_ADMIN }
-      - { path: ^/ideas/add, roles: ROLE_ADMIN }
-      - { path: ^/ideas/, roles: [ROLE_ADMIN,ROLE_USER] }
-      - { path: ^/admin, roles: ROLE_ADMIN }
-      - { path: ^/home, roles: [ROLE_ADMIN,ROLE_USER] }
+      # - { path: ^/ideas/update, roles: ROLE_ADMIN }
+      # - { path: ^/ideas/delete, roles: ROLE_ADMIN }
+      # - { path: ^/ideas/add, roles: ROLE_ADMIN }
+      # - { path: ^/ideas/, roles: [ROLE_ADMIN,ROLE_USER] }
+      # - { path: ^/admin, roles: ROLE_ADMIN }
+      # - { path: ^/home, roles: [ROLE_ADMIN,ROLE_USER] }

@@ -1,0 +1,59 @@
+{% extends 'IdeasBundle::base.html.twig' %}
+
+{% block body %}
+    <!-- Portfolio Item Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{ idea_title }}
+                {% if idea_subtitle is defined %}
+                    <small>{{ idea_subtitle }}</small>
+                {% endif %}
+            </h1>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+        <div class="col-md-8">
+            <img class="img-responsive" src="http://placehold.it/750x500" alt="">
+        </div>
+
+        <div class="col-md-4">
+            <h3>{{ idea_title }}</h3>
+            <p>{{ idea_description }}</p>
+            {% if idea.idea_descriptions_items is defined %}
+                <h3>Project Details</h3>
+                <ul>
+                    <li>Lorem Ipsum</li>
+                    <li>Dolor Sit Amet</li>
+                    <li>Consectetur</li>
+                    <li>Adipiscing Elit</li>
+                </ul>
+            {% endif %}
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Related Projects Row -->
+    {% if related_projects is defined %}
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h3 class="page-header">Related Projects</h3>
+            </div>
+
+                {% for related_project in related_projects %}
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="#">
+                            <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
+                        </a>
+                    </div>
+                {% endfor %}
+
+        </div>
+    <!-- /.row -->
+    {% endif %}
+{% endblock %}
