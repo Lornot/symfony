@@ -2,6 +2,7 @@
 
 {% block title %}Add new idea{% endblock %}
 
+{% form_theme form 'IdeasBundle::forms/form_label.html.twig' %}
 
 {% block body %}
     {{ form(form) }}

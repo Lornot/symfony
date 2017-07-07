@@ -78,4 +78,62 @@ class Idea
         $this -> created_at = $created_at;
     }
 
+    /**
+     * @var integer
+     */
+    private $attractiveness;
+
+
+    /**
+     * Set attractiveness
+     *
+     * @param integer $attractiveness
+     *
+     * @return Idea
+     */
+    public function setAttractiveness($attractiveness)
+    {
+        $this->attractiveness = $attractiveness;
+
+        return $this;
+    }
+
+    /**
+     * Get attractiveness
+     *
+     * @return integer
+     */
+    public function getAttractiveness()
+    {
+        return $this->attractiveness;
+    }
+    /**
+     * @var string
+     */
+    private $image;
+
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Idea
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 }

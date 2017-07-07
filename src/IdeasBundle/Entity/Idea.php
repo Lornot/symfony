@@ -32,6 +32,19 @@ class Idea
      */
     protected $created_at;
 
+    /**
+     * @var integer
+     */
+    private $attractiveness;
+
+    /**
+     * @var string
+     * @Assert\NotBlank(message="Please upload the image of the idea")
+     * @Assert\File(mimeTypes={"image/jpeg","image/png"})
+     *
+     */
+    private $image;
+
 
     /**
      * Get id
@@ -78,4 +91,52 @@ class Idea
         $this -> created_at = $created_at;
     }
 
+
+    /**
+     * Set attractiveness
+     *
+     * @param integer $attractiveness
+     *
+     * @return Idea
+     */
+    public function setAttractiveness($attractiveness)
+    {
+        $this->attractiveness = $attractiveness;
+
+        return $this;
+    }
+
+    /**
+     * Get attractiveness
+     *
+     * @return integer
+     */
+    public function getAttractiveness()
+    {
+        return $this->attractiveness;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Idea
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 }

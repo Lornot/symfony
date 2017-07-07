@@ -17,7 +17,7 @@
     <div class="row">
 
         <div class="col-md-8">
-            <img class="img-responsive" src="http://placehold.it/750x500" alt="">
+            <img class="img-responsive" src="{{ asset('uploads/ideas_images/')~ idea.image }}" alt="{{ idea_title }}">
         </div>
 
         <div class="col-md-4">
@@ -32,6 +32,12 @@
                     <li>Adipiscing Elit</li>
                 </ul>
             {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('ideas_update', {'idea_id': idea_id}) }}" class="btn btn-default btn-sm">Edit</a>
+                <a href="{{ path('ideas_remove', {'idea_id': idea_id}) }}" class="btn btn-danger btn-sm">Remove</a>
+            {% endif %}
+
         </div>
 
     </div>
@@ -56,4 +62,6 @@
         </div>
     <!-- /.row -->
     {% endif %}
+
+
 {% endblock %}

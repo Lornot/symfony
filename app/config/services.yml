@@ -19,3 +19,7 @@ services:
     calls:
      - [setMailer, ['@app.mailer']]
      - [setLogger, ['%app.newsletter_manager.logger%']]
+
+  IdeasBundle\Service\FileUploader:
+    arguments:
+      $targetDir: '%ideas_images%'

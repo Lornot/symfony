@@ -15,6 +15,14 @@ IdeasBundle\Entity\Idea:
         description:
             type: string
             length: 255
+        attractiveness:
+            type: integer
+            length: 2
         created_at:
             type: datetime
+        image:
+            type: string
+            length: 255
+            mime_type: application/pdf
+            message: 'Please upload your image'
     lifecycleCallbacks: {  }

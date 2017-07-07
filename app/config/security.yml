@@ -10,17 +10,19 @@ security:
             memory:
               users:
                 oleg:
-                  password: $2y$12$NXnISGwmt7JVhmoUwRCJgeXi3bW/FvTfBcVd4TCXd5mHVeEUT0xju
+                  #password: $2y$12$NXnISGwmt7JVhmoUwRCJgeXi3bW/FvTfBcVd4TCXd5mHVeEUT0xju
+                  password: '111'
                   roles: 'ROLE_ADMIN'
                 mariana:
-                  password: $2y$12$owKAvsGnqG72phvkzE42JurRBQH.1oemQMSvP./PzvwSWz9INtPfu
+                  #password: $2y$12$owKAvsGnqG72phvkzE42JurRBQH.1oemQMSvP./PzvwSWz9INtPfu
+                  password: '222'
                   roles: 'ROLE_USER'
 
     encoders:
       Symfony\Component\Security\Core\User\User:
-        #plaintext
-        algorithm: bcrypt
-        cost: 12
+        plaintext
+        #algorithm: bcrypt
+        #cost: 12
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -50,6 +52,7 @@ security:
       # - { path: ^/ideas/update, roles: ROLE_ADMIN }
       # - { path: ^/ideas/delete, roles: ROLE_ADMIN }
       # - { path: ^/ideas/add, roles: ROLE_ADMIN }
-      # - { path: ^/ideas/, roles: [ROLE_ADMIN,ROLE_USER] }
+       - { path: ^/ideas/, roles: [ROLE_ADMIN,ROLE_USER] }
+       - { path: ^/overview/, roles: [ROLE_ADMIN,ROLE_USER] }
       # - { path: ^/admin, roles: ROLE_ADMIN }
       # - { path: ^/home, roles: [ROLE_ADMIN,ROLE_USER] }

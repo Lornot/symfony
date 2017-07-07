@@ -1,3 +1,7 @@
 body {
     background: #8ebdff;
 }
+
+span.required {
+    color: red
+}

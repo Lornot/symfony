@@ -1,0 +1,31 @@
+{% extends 'IdeasBundle::base.html.twig' %}
+
+{% block title %}Edit idea{% endblock %}
+
+{#{% form_theme form _self %}
+
+{% block integer_widget %}
+    <div class="integer_widget">
+        {% set type = type|default('number') %}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}#}
+
+{#
+{% form_theme form 'IdeasBundle::forms/fields.html.twig' %}
+{% form_theme form.save 'IdeasBundle::forms/fields_child.html.twig' %}
+#}
+{#
+{% form_theme form _self %}
+
+{% block _idea_save_widget %}
+   {{ block('submit_row') }}
+{% endblock %}#}
+
+{% form_theme form 'IdeasBundle::forms/form_label.html.twig' %}
+
+
+
+{% block body %}
+    {{ form(form) }}
+{% endblock %}
