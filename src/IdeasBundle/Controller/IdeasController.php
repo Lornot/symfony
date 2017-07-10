@@ -14,6 +14,13 @@
 
     class IdeasController extends Controller {
 
+        /*private $file_uploader;
+
+        public function __construct(FileUploader $fileUploader)
+        {
+            $this->file_uploader = $fileUploader;
+        }*/
+
         public function overviewAction() {
 
             $logger = $this->get('logger');
@@ -83,9 +90,9 @@
          * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
          * Security("has_role('ROLE_ADMIN')")
          */
-        public function addAction(Request $request/*, FileUploader $fileUploader*//*, FileUploader $fileUploader*/) {
-            //$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page');
+        public function addAction(Request $request/*, FileUploader $fileUploader*/) {
 
+            //$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page');
 
             $idea = new Idea();
             $idea->setCreatedAt(new \DateTime());
@@ -96,9 +103,10 @@
 
                 $idea = $form->getData();
 
-                /*$file = $idea->getImage();
+                $fileUploader = $this->get('app.file_uploader');
+                $file = $idea->getImage();
                 $fileName = $fileUploader->upload($file);
-                $idea->setImage($fileName);*/
+                $idea->setImage($fileName);
 
                 /** Апдейт бази даних*/
                 $em = $this->getDoctrine()->getManager();
@@ -139,6 +147,7 @@
             $form = $this->createForm(IdeaType::class, $idea);
             $form->handleRequest($request);
 
+
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $idea = $form->getData();
@@ -146,9 +155,14 @@
                 $manager = $this->getDoctrine()->getManager();
                 $idea_from_db = $manager->getRepository('IdeasBundle:Idea')->find($idea_id);
 
+                $fileUploader = $this->get('app.file_uploader');
+                $file = $idea->getImage();
+                $fileName = $fileUploader->upload($file);
+
                 $idea_from_db->setTitle($idea->getTitle());
                 $idea_from_db->setDescription($idea->getDescription());
                 $idea_from_db->setCreatedAt($idea->getCreatedAt());
+                $idea_from_db->setImage($fileName);
 
                 $manager->flush();
                 return $this->redirectToRoute('overview');
@@ -156,9 +170,12 @@
                 $repository = $this->getDoctrine()->getRepository('IdeasBundle:Idea');
                 $idea = $repository->find($idea_id);
 
-                $idea->setImage(
-                    new File($this->getParameter('ideas_images').'/'.$idea->getImage())
-                );
+                $image_name = $idea->getImage();
+                if ($image_name) {
+                    $idea->setImage(
+                        new File($this->getParameter('ideas_images').'/'.$idea->getImage())
+                    );
+                }
 
                 if(!$idea) {
                     throw $this->createNotFoundException(

@@ -5,9 +5,32 @@ parameters:
   app.mailer.transport: sendmail
   app.newsletter_manager.logger: loggasdfer
 services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  IdeasBundle\Controller\:
+    resource: '../../src/IdeasBundle/Controller'
+    public: true
+    tags: ['controller.service_arguments']
+
+  #IdeasBundle\Service\FileUploader:
+  app.file_uploader:
+    class: IdeasBundle\Service\FileUploader
+    arguments:
+      $targetDir: '%ideas_images%'
+
+  IdeasBundle\Service\FileUploader: '@app.file_uploader'
+
 #    service_name:
 #        class: IdeasBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+  #app.file_uploader:
+    #arguments:
+      #$targetDir: '%ideas_images%'
 
   app.mailer:
     class: IdeasBundle\Service\Mailer
@@ -20,6 +43,3 @@ services:
      - [setMailer, ['@app.mailer']]
      - [setLogger, ['%app.newsletter_manager.logger%']]
 
-  IdeasBundle\Service\FileUploader:
-    arguments:
-      $targetDir: '%ideas_images%'
