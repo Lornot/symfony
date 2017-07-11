@@ -32,3 +32,7 @@ logout:
 about:
   path: /about
   defaults: { _controller: IdeasBundle:Ideas:about}
+
+users:
+  path: /users/list
+  defaults: { _controller: IdeasBundle:User:list}

@@ -1,3 +1,11 @@
 ideas_homepage:
     path:     /
     defaults: { _controller: IdeasBundle:Default:index }
+
+show:
+    path:     /user/{user_id}
+    defaults: { _controller: IdeasBundle:UserController:show }
+
+list:
+    path:     /users
+    defaults: { _controller: IdeasBundle:UserController:list }

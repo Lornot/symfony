@@ -2,6 +2,8 @@
 
 namespace IdeasBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * User
  */
@@ -14,6 +16,7 @@ class User
 
     /**
      * @var string
+     * @Assert\NotBlank
      */
     private $firstName;
 
@@ -24,6 +27,7 @@ class User
 
     /**
      * @var string
+     * @Assert\NotBlank
      */
     private $email;
 

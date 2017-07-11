@@ -138,7 +138,7 @@
                 $this->addFlash('notice', 'Success');
                 return $this->redirectToRoute('overview');
             }
-            
+
             return $this->render('IdeasBundle:Default:add.html.twig', [
                 'form' => $form->createView()
             ]);
