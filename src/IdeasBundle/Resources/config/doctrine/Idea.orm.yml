@@ -18,11 +18,11 @@ IdeasBundle\Entity\Idea:
         attractiveness:
             type: integer
             length: 2
+            nullable: true
         created_at:
             type: datetime
         image:
             type: string
             length: 255
-            mime_type: application/pdf
-            message: 'Please upload your image'
+            nullable: true
     lifecycleCallbacks: {  }

@@ -97,16 +97,19 @@
             $idea = new Idea();
             $idea->setCreatedAt(new \DateTime());
             $form = $this->createForm(IdeaType::class, $idea);
+
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $idea = $form->getData();
 
-                $fileUploader = $this->get('app.file_uploader');
                 $file = $idea->getImage();
-                $fileName = $fileUploader->upload($file);
-                $idea->setImage($fileName);
+                if ($file) {
+                    $fileUploader = $this->get('app.file_uploader');
+                    $fileName = $fileUploader->upload($file);
+                    $idea->setImage($fileName);
+                }
 
                 /** Апдейт бази даних*/
                 $em = $this->getDoctrine()->getManager();
@@ -135,7 +138,7 @@
                 $this->addFlash('notice', 'Success');
                 return $this->redirectToRoute('overview');
             }
-
+            
             return $this->render('IdeasBundle:Default:add.html.twig', [
                 'form' => $form->createView()
             ]);
@@ -147,7 +150,6 @@
             $form = $this->createForm(IdeaType::class, $idea);
             $form->handleRequest($request);
 
-
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $idea = $form->getData();
@@ -157,16 +159,18 @@
 
                 $fileUploader = $this->get('app.file_uploader');
                 $file = $idea->getImage();
-                $fileName = $fileUploader->upload($file);
+                if ($file) {
+                    $fileName = $fileUploader->upload($file);
+                    $idea_from_db->setImage($fileName);
+                }
 
                 $idea_from_db->setTitle($idea->getTitle());
                 $idea_from_db->setDescription($idea->getDescription());
                 $idea_from_db->setCreatedAt($idea->getCreatedAt());
-                $idea_from_db->setImage($fileName);
 
                 $manager->flush();
                 return $this->redirectToRoute('overview');
-            } else {
+            } else if (!$form->isSubmitted()) {
                 $repository = $this->getDoctrine()->getRepository('IdeasBundle:Idea');
                 $idea = $repository->find($idea_id);
 

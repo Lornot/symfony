@@ -39,7 +39,6 @@ class Idea
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Please upload the image of the idea")
      * @Assert\File(mimeTypes={"image/jpeg","image/png"})
      *
      */

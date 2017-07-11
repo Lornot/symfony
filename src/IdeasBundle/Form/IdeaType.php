@@ -20,7 +20,7 @@
             
             $builder
                 ->add('title', null, [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'min_length' => 1,
                         'pattern' => false
@@ -50,7 +50,8 @@
 
         public function configureOptions(OptionsResolver $resolver){
             $resolver -> setDefaults([
-               'data_class' => Idea::class
+                'data_class' => Idea::class,
+                'allow_extra_fields' => true
             ]);
         }
 

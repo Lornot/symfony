@@ -22,6 +22,15 @@ services:
     arguments:
       $targetDir: '%ideas_images%'
 
+  IdeasBundle\Service\:
+    resource: '../../src/IdeasBundle/Service'
+    public: true
+    tags: ['controller.service_arguments']
+
+  IdeasBundle\Service\Mailer:
+    arguments:
+      $type: 'type'
+
   IdeasBundle\Service\FileUploader: '@app.file_uploader'
 
 #    service_name:
