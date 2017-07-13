@@ -1,0 +1,4 @@
+IdeasBundle\Entity\Idea:
+  properies:
+    title:
+      - NotBlank

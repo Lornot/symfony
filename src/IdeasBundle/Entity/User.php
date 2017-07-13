@@ -16,7 +16,6 @@ class User
 
     /**
      * @var string
-     * @Assert\NotBlank
      */
     private $firstName;
 
@@ -28,6 +27,7 @@ class User
     /**
      * @var string
      * @Assert\NotBlank
+     * @Assert\Length(min=3)
      */
     private $email;
 
@@ -102,6 +102,15 @@ class User
         $this->lastName = $lastName;
 
         return $this;
+    }
+
+    /**
+     * @Assert\IsTrue(message = "The password cannot match your first name")
+     * @return bool
+     */
+    public function isPasswordLegal()
+    {
+        return $this->firstName !== $this->password;
     }
 
     /**

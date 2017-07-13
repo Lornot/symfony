@@ -17,9 +17,6 @@ IdeasBundle\Entity\User:
             type: string
             length: 255
             column: last_name
-        email:
-            type: email
-            length: 255
         password:
             type: string
             length: 255

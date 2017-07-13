@@ -4,6 +4,22 @@
 
 {% form_theme form 'IdeasBundle::forms/form_label.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/form.js') }}"></script>
+{% endblock %}
+
 {% block body %}
-    {{ form(form) }}
+    {{ form_start(form) }}
+
+    <h3>Keywords</h3>
+    <ul class="keywords" data-prototype="{{ form_widget(form.keywords.vars.prototype)|e('html_attr') }}">
+        {% for keyword in form.keywords %}
+            <li>{{ form_row(keyword.name) }}</li>
+            {{ form_widget(form.keywords.vars.prototype.name)|e }}
+        {% endfor %}
+
+    </ul>
+
+    {{ form_end(form) }}
 {% endblock %}

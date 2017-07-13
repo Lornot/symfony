@@ -9,10 +9,15 @@
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\IntegerType;
     use Symfony\Component\Form\Extension\Core\Type\FileType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\Form\Extension\Core\Type\CountryType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use IdeasBundle\Entity\Idea;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use IdeasBundle\Type\TagsType;
+    use IdeasBundle\Form\KeywordType;
     
     class IdeaType extends AbstractType {
         
@@ -32,6 +37,12 @@
                         'min_length' => 2,
                         'pattern' => false
                     ]
+                ])
+                ->add('keywords', CollectionType::class, [
+                    'entry_type' => KeywordType::class,
+                    'allow_add'  => true,
+                    'allow_delete' => true,
+                    'by_reference' => false
                 ])
                 ->add('attractiveness', IntegerType::class, [
                     'required' => false,

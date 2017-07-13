@@ -17,10 +17,12 @@ class UserController extends Controller
 
     public function listAction()
     {
-
         $user = new User();
 
-        $user->setPassword(32423);
+        $user->setEmail('dd');
+        $user->setFirstName('Oleg');
+        $user->setPassword('Oleg');
+
 
         $validator = $this->get('validator');
         $errors = $validator->validate($user);

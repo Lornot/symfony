@@ -1,0 +1,23 @@
+IdeasBundle\Entity\Keyword:
+  type: entity
+  table: keywords
+  repositoryClass: IdeasBundle\Repository\KeywordRepository
+
+  manyToOne:
+    idea:
+      targetEntity: Idea
+      inversedBy: keywords
+      joinColumn:
+        name: idea_id
+        referencedColumnName: id
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+
+  fields:
+    name:
+      type: string
+      length: 255

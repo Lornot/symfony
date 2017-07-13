@@ -2,6 +2,7 @@
 
 namespace IdeasBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -27,6 +28,11 @@ class Idea
     protected $description;
 
     /**
+     *
+     */
+    protected $keywords;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Type("\DateTime")
      */
@@ -45,6 +51,11 @@ class Idea
     private $image;
 
 
+    public function __construct()
+    {
+        $this->keywords = new ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -52,7 +63,7 @@ class Idea
      */
     public function getId()
     {
-        return $this -> id;
+        return $this->id;
     }
 
     /**
@@ -62,34 +73,58 @@ class Idea
      */
     public function setId()
     {
-        return $this ->id;
+        return $this->id;
     }
     
 
-    public function getTitle() {
-        return $this -> title;
+    public function getTitle()
+    {
+        return $this->title;
     }
 
-    public function setTitle($title) {
-        $this -> title = $title;
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this -> description;
     }
 
-    public function setDescription($decription) {
-        $this -> description = $decription;
+    public function setDescription($decription)
+    {
+        $this->description = $decription;
     }
 
-    public function getCreatedAt(){
+    public function getCreatedAt()
+    {
         return $this -> created_at;
     }
 
     public function setCreatedAt(\DateTime $created_at) {
-        $this -> created_at = $created_at;
+        $this->created_at = $created_at;
     }
 
+    public function addKeyword(Keyword $keyword)
+    {
+        $this->keywords->add($keyword);
+    }
+
+    public function removeKeyword(Keyword $keyword)
+    {
+        $this->keywords->removeElement($keyword);
+    }
+
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+    }
+
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
 
     /**
      * Set attractiveness

@@ -8,13 +8,20 @@ IdeasBundle\Entity\Idea:
             id: true
             generator:
                 strategy: AUTO
+    oneToMany:
+        keywords:
+          targetEntity: Keyword
+          cascade: [persist]
+          mappedBy: keyword
     fields:
         title:
             type: string
             length: 255
         description:
-            type: string
-            length: 255
+            type: text
+        keywords:
+            type: text
+            nullable: true
         attractiveness:
             type: integer
             length: 2

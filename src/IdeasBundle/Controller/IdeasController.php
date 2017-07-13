@@ -3,12 +3,15 @@
     namespace IdeasBundle\Controller;
 
     use IdeasBundle\Entity\Idea;
+    use IdeasBundle\Entity\Keyword;
     use IdeasBundle\Form\IdeaType;
+    use IdeasBundle\Form\KeywordType;
     use IdeasBundle\Service\FileUploader;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\File\File;
+
 
     //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -96,8 +99,18 @@
 
             $idea = new Idea();
             $idea->setCreatedAt(new \DateTime());
-            $form = $this->createForm(IdeaType::class, $idea);
 
+//            $keyword1 = new Keyword();
+//            $keyword1->setName('babysitter');
+//            //$idea->setKeywords('asdfasdf asdfasdf sdafasdf');
+//            $idea->getKeywords()->add($keyword1);
+//
+//            $keyword2 = new Keyword();
+//            $keyword2->setName('baby');
+//            //$idea->setKeywords($keyword1);
+//            $idea->getKeywords()->add($keyword2);
+
+            $form = $this->createForm(IdeaType::class, $idea);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
