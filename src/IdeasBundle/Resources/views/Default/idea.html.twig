@@ -33,6 +33,15 @@
                 </ul>
             {% endif %}
 
+            {% if idea.keywords is defined %}
+                <h3>Keywords</h3>
+                <ul>
+                    {% for keyword in idea.keywords %}
+                        <li>{{ keyword.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('ideas_update', {'idea_id': idea_id}) }}" class="btn btn-default btn-sm">Edit</a>
                 <a href="{{ path('ideas_remove', {'idea_id': idea_id}) }}" class="btn btn-danger btn-sm">Remove</a>

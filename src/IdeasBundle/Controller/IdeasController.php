@@ -116,6 +116,12 @@
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $idea = $form->getData();
+                $em = $this->getDoctrine()->getManager();
+
+                foreach ($idea->getKeywords() as $keyword) {
+                    $keyword->setIdea($idea);
+                    $em->persist($keyword);
+                }
 
                 $file = $idea->getImage();
                 if ($file) {
@@ -125,7 +131,7 @@
                 }
 
                 /** Апдейт бази даних*/
-                $em = $this->getDoctrine()->getManager();
+
                 $em->persist($idea);
                 $em->flush();
 
@@ -163,10 +169,10 @@
             $form = $this->createForm(IdeaType::class, $idea);
             $form->handleRequest($request);
 
+
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $idea = $form->getData();
-
                 $manager = $this->getDoctrine()->getManager();
                 $idea_from_db = $manager->getRepository('IdeasBundle:Idea')->find($idea_id);
 

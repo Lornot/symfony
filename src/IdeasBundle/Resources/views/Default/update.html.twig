@@ -2,30 +2,34 @@
 
 {% block title %}Edit idea{% endblock %}
 
-{#{% form_theme form _self %}
-
-{% block integer_widget %}
-    <div class="integer_widget">
-        {% set type = type|default('number') %}
-        {{ block('form_widget_simple') }}
-    </div>
-{% endblock %}#}
-
-{#
-{% form_theme form 'IdeasBundle::forms/fields.html.twig' %}
-{% form_theme form.save 'IdeasBundle::forms/fields_child.html.twig' %}
-#}
-{#
-{% form_theme form _self %}
-
-{% block _idea_save_widget %}
-   {{ block('submit_row') }}
-{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/form.js') }}"></script>
+{% endblock %}
 
 {% form_theme form 'IdeasBundle::forms/form_label.html.twig' %}
 
-
-
 {% block body %}
-    {{ form(form) }}
+    {{ form_start(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.attractiveness) }}
+
+    {{ form_errors(form.keywords) }}
+    {{ form_label(form.keywords)}}
+    <ul class="keywords" data-prototype="{{ form_widget(form.keywords.vars.prototype)|e('html_attr') }}">
+        {% for keyword in form.keywords %}
+            <li>{{ form_row(keyword.name) }}</li>
+            {{ form_widget(form.keywords.vars.prototype.name)|e }}
+        {% endfor %}
+    </ul>
+
+    {{ form_row(form.created_at) }}
+    {{ form_row(form.image) }}
+
+
+    {{ form_row(form.save) }}
+
+    {{ form_end(form, {'render_rest': false}) }}
 {% endblock %}

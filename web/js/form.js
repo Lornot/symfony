@@ -13,7 +13,7 @@ jQuery(document).ready(function() {
     $collectionHolder.append($newLinkLi);
 
     $collectionHolder.find('li').each(function(){
-        addKeywordFormDeleteLink(($this));
+        addKeywordFormDeleteLink($(this));
     });
 
     // count the current form inputs we have (e.g. 2), use that as the new

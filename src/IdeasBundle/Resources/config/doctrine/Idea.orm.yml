@@ -11,17 +11,14 @@ IdeasBundle\Entity\Idea:
     oneToMany:
         keywords:
           targetEntity: Keyword
-          cascade: [persist]
-          mappedBy: keyword
+          cascade: [persist, remove]
+          mappedBy: idea
     fields:
         title:
             type: string
             length: 255
         description:
             type: text
-        keywords:
-            type: text
-            nullable: true
         attractiveness:
             type: integer
             length: 2

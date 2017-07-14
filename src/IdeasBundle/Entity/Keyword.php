@@ -10,6 +10,7 @@
          * @var integer
          */
         protected $id;
+        protected $idea;
 
         /**
          * Get id
@@ -39,5 +40,15 @@
         public function setName($name)
         {
             $this->name = $name;
+        }
+
+        public function setIdea(Idea $idea)
+        {
+            $this->idea = $idea;
+        }
+
+        public function getIdea()
+        {
+            return $this->idea;
         }
     }

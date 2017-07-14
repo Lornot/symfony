@@ -1,0 +1,10 @@
+{% block _keyword_entry_widget %}
+
+    <h3>{{ form_label(form.keywords)}}</h3>
+    <ul class="keywords" data-prototype="{{ form_widget(form.keywords.vars.prototype)|e('html_attr') }}">
+        {% for keyword in form.keywords %}
+            <li>{{ form_row(keyword.name) }}</li>
+            {{ form_widget(form.keywords.vars.prototype.name)|e }}
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,7 +1,6 @@
 {% extends 'IdeasBundle::base.html.twig' %}
 
 {% block title %}Add new idea{% endblock %}
-
 {% form_theme form 'IdeasBundle::forms/form_label.html.twig' %}
 
 {% block javascripts %}
@@ -12,14 +11,23 @@
 {% block body %}
     {{ form_start(form) }}
 
-    <h3>Keywords</h3>
-    <ul class="keywords" data-prototype="{{ form_widget(form.keywords.vars.prototype)|e('html_attr') }}">
-        {% for keyword in form.keywords %}
-            <li>{{ form_row(keyword.name) }}</li>
-            {{ form_widget(form.keywords.vars.prototype.name)|e }}
-        {% endfor %}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.attractiveness) }}
 
-    </ul>
+        {{ form_label(form.keywords)}}
+        <ul class="keywords" data-prototype="{{ form_widget(form.keywords.vars.prototype)|e('html_attr') }}">
+            {% for keyword in form.keywords %}
+                <li>{{ form_row(keyword.name) }}</li>
+                {{ form_widget(form.keywords.vars.prototype.name)|e }}
+            {% endfor %}
+        </ul>
 
-    {{ form_end(form) }}
+        {{ form_row(form.created_at) }}
+        {{ form_row(form.image) }}
+
+
+        {{ form_row(form.save) }}
+
+    {{ form_end(form, {'render_rest': false}) }}
 {% endblock %}

@@ -10,6 +10,7 @@ IdeasBundle\Entity\Keyword:
       joinColumn:
         name: idea_id
         referencedColumnName: id
+        onDelete: CASCADE
   id:
     id:
       type: integer
