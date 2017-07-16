@@ -4,8 +4,8 @@ parameters:
 #    parameter_name: value
   app.mailer.transport: sendmail
   app.newsletter_manager.logger: loggasdfer
-services:
 
+services:
   _defaults:
     autowire: true
     autoconfigure: true

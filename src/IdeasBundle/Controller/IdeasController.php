@@ -100,18 +100,9 @@
             $idea = new Idea();
             $idea->setCreatedAt(new \DateTime());
 
-//            $keyword1 = new Keyword();
-//            $keyword1->setName('babysitter');
-//            //$idea->setKeywords('asdfasdf asdfasdf sdafasdf');
-//            $idea->getKeywords()->add($keyword1);
-//
-//            $keyword2 = new Keyword();
-//            $keyword2->setName('baby');
-//            //$idea->setKeywords($keyword1);
-//            $idea->getKeywords()->add($keyword2);
-
             $form = $this->createForm(IdeaType::class, $idea);
             $form->handleRequest($request);
+            
 
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -168,7 +159,6 @@
             $idea = new Idea();
             $form = $this->createForm(IdeaType::class, $idea);
             $form->handleRequest($request);
-
 
             if ($form->isSubmitted() && $form->isValid()) {
 

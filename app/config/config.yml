@@ -39,6 +39,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      project_name: 'Dream your idea'
     form_themes:
             - "bootstrap_3_layout.html.twig"
 
