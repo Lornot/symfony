@@ -2,6 +2,7 @@
 
     namespace IdeasBundle\Controller;
 
+    use Doctrine\Common\Collections\ArrayCollection;
     use IdeasBundle\Entity\Idea;
     use IdeasBundle\Entity\Keyword;
     use IdeasBundle\Form\IdeaType;
@@ -166,6 +167,19 @@
                 $manager = $this->getDoctrine()->getManager();
                 $idea_from_db = $manager->getRepository('IdeasBundle:Idea')->find($idea_id);
 
+                $originalKeywords = new ArrayCollection();
+                foreach ($idea_from_db->getKeywords() as $keyword) {
+                    $originalKeywords->add($keyword);
+                }
+
+                foreach ($originalKeywords as $originalKeyword) {
+                    if (false == $idea->getKeywords()->contains($originalKeyword))
+                        $manager->remove($originalKeyword);
+
+                }
+
+
+
                 $fileUploader = $this->get('app.file_uploader');
                 $file = $idea->getImage();
                 if ($file) {
@@ -174,9 +188,17 @@
                 }
 
                 $idea_from_db->setTitle($idea->getTitle());
+                $idea_from_db->setKeywords($idea->getKeywords());
                 $idea_from_db->setDescription($idea->getDescription());
+                $idea_from_db->setAttractiveness($idea->getAttractiveness());
                 $idea_from_db->setCreatedAt($idea->getCreatedAt());
 
+                foreach ($idea->getKeywords() as $keyword) {
+                    $keyword->setIdea($idea_from_db);
+                    $manager->persist($keyword);
+                }
+
+                $manager->persist($idea_from_db);
                 $manager->flush();
                 return $this->redirectToRoute('overview');
             } else if (!$form->isSubmitted()) {

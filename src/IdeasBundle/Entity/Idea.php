@@ -137,7 +137,6 @@ class Idea
     public function setAttractiveness($attractiveness)
     {
         $this->attractiveness = $attractiveness;
-
         return $this;
     }
 
