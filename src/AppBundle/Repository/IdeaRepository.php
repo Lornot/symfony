@@ -1,6 +1,6 @@
 <?php
 
-namespace IdeasBundle\Repository;
+namespace AppBundle\Repository;
 
 /**
  * IdeaRepository
@@ -23,7 +23,7 @@ class IdeaRepository extends \Doctrine\ORM\EntityRepository
 
         
         $ideas = $manager -> createQuery(
-            'SELECT idea FROM IdeasBundle:Idea idea ORDER BY idea.title ASC'
+            'SELECT idea FROM AppBundle:Idea idea ORDER BY idea.title ASC'
         ) -> getResult();
 
         //$ideas = $query -> getResult();

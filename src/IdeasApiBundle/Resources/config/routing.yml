@@ -1,0 +1,16 @@
+
+get_ideas:
+    path:     /api/ideas/get_all
+    defaults: { _controller: IdeasApiBundle:Ideas:getAll }
+
+get_idea:
+    path:     /api/ideas/get/{idea_id}
+    defaults: { _controller: IdeasApiBundle:Ideas:get }
+
+add_idea:
+    path:     /api/add_idea
+    defaults: { _controller: IdeasApiBundle:Ideas:add }
+
+update:
+    path:     /api/ideas/update/{idea_id}
+    defaults: { _controller: IdeasApiBundle:Ideas:update }

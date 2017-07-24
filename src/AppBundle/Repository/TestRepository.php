@@ -1,6 +1,6 @@
 <?php
 
-namespace IdeasBundle\Repository;
+namespace AppBundle\Repository;
 
 /**
  * TestRepository

@@ -1,8 +1,8 @@
 <?php
 
-    namespace IdeasBundle\Service;
+    namespace AppBundle\Service;
 
-    use IdeasBundle\Service\Mailer;
+    use AppBundle\Service\Mailer;
 
     class NewsLetterManager
     {

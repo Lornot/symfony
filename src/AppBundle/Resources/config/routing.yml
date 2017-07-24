@@ -9,3 +9,7 @@ show:
 list:
     path:     /users
     defaults: { _controller: IdeasBundle:UserController:list }
+
+ideas_api_homepage:
+    path:     /
+    defaults: { _controller: IdeasApiBundle:Default:index }

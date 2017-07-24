@@ -3,11 +3,11 @@
     namespace IdeasBundle\Controller;
 
     use Doctrine\Common\Collections\ArrayCollection;
-    use IdeasBundle\Entity\Idea;
-    use IdeasBundle\Entity\Keyword;
+    use AppBundle\Entity\Idea;
+    use AppBundle\Entity\Keyword;
     use IdeasBundle\Form\IdeaType;
     use IdeasBundle\Form\KeywordType;
-    use IdeasBundle\Service\FileUploader;
+    use AppBundle\Service\FileUploader;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -27,14 +27,7 @@
 
         public function overviewAction() {
 
-            $logger = $this->get('logger');
-
-            $logger->info('The idea was deleted');
-            //$logger->error('An error occured');
-
-            //$logger->critical('Delete has been occured with error', ['cause' => 'in_hurry']);
-
-            $ideas_repository = $this->getDoctrine()->getRepository('IdeasBundle:Idea');
+            $ideas_repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
             $ideas = $ideas_repository->findBy(
                 [],
                 ['title' => 'ASC']
@@ -52,7 +45,7 @@
 
             $user = $this->getUser();
 
-            $ideas_repository = $this->getDoctrine()->getRepository('IdeasBundle:Idea');
+            $ideas_repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
 
             $ideas = $ideas_repository->findBy(
                 [],
@@ -60,7 +53,7 @@
             );
 
             $manager = $this->getDoctrine()->getManager();
-            $ideas = $manager->getRepository('IdeasBundle:Idea')->findLast5daysIdeas();
+            $ideas = $manager->getRepository('AppBundle:Idea')->findLast5daysIdeas();
 
             $newsLetterManager = $this->get('app.newsletter_manager');
 
@@ -73,14 +66,14 @@
 
         public function showAction($idea){
 
-            $repository = $this->getDoctrine()->getRepository('IdeasBundle:Idea');
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
             $idea = $repository->find($idea);
             if (!$idea) {
                 throw $this->createNotFoundException(
                     'No idea found for id '.$idea
                 );
             }
-            return $this->render('IdeasBundle:Default:idea.html.twig', [
+            return $this->render('AppBundle:Default:idea.html.twig', [
                 'idea_title' => $idea->getTitle(),
                 'idea_description' => $idea->getDescription(),
                 'idea_created_at' => $idea->getCreatedAt()->format('d.m.Y'),
@@ -165,7 +158,7 @@
 
                 $idea = $form->getData();
                 $manager = $this->getDoctrine()->getManager();
-                $idea_from_db = $manager->getRepository('IdeasBundle:Idea')->find($idea_id);
+                $idea_from_db = $manager->getRepository('AppBundle:Idea')->find($idea_id);
 
                 $originalKeywords = new ArrayCollection();
                 foreach ($idea_from_db->getKeywords() as $keyword) {
@@ -202,7 +195,7 @@
                 $manager->flush();
                 return $this->redirectToRoute('overview');
             } else if (!$form->isSubmitted()) {
-                $repository = $this->getDoctrine()->getRepository('IdeasBundle:Idea');
+                $repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
                 $idea = $repository->find($idea_id);
 
                 $image_name = $idea->getImage();

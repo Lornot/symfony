@@ -3,7 +3,7 @@
 namespace IdeasBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use IdeasBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller

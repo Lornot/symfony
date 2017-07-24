@@ -1,6 +1,6 @@
 <?php
 
-    namespace IdeasBundle\Service;
+    namespace AppBundle\Service;
 
     class Mailer {
         protected $type;

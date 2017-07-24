@@ -1,7 +1,7 @@
-IdeasBundle\Entity\Keyword:
+AppBundle\Entity\Keyword:
   type: entity
   table: keywords
-  repositoryClass: IdeasBundle\Repository\KeywordRepository
+  repositoryClass: AppBundle\Repository\KeywordRepository
 
   manyToOne:
     idea:

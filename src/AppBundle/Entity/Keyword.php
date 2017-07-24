@@ -1,6 +1,6 @@
 <?php
 
-    namespace IdeasBundle\Entity;
+    namespace AppBundle\Entity;
 
     class Keyword
     {

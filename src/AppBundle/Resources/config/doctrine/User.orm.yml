@@ -1,7 +1,7 @@
-IdeasBundle\Entity\User:
+AppBundle\Entity\User:
     type: entity
     table: users
-    repositoryClass: IdeasBundle\Repository\UserRepository
+    repositoryClass: AppBundle\Repository\UserRepository
     id:
         id:
             type: integer

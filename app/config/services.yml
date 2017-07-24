@@ -16,22 +16,22 @@ services:
     public: true
     tags: ['controller.service_arguments']
 
-  #IdeasBundle\Service\FileUploader:
+  #AppBundle\Service\FileUploader:
   app.file_uploader:
-    class: IdeasBundle\Service\FileUploader
+    class: AppBundle\Service\FileUploader
     arguments:
       $targetDir: '%ideas_images%'
 
-  IdeasBundle\Service\:
-    resource: '../../src/IdeasBundle/Service'
+  AppBundle\Service\:
+    resource: '../../src/AppBundle/Service'
     public: true
     tags: ['controller.service_arguments']
 
-  IdeasBundle\Service\Mailer:
+  AppBundle\Service\Mailer:
     arguments:
       $type: 'type'
 
-  IdeasBundle\Service\FileUploader: '@app.file_uploader'
+  AppBundle\Service\FileUploader: '@app.file_uploader'
 
 #    service_name:
 #        class: IdeasBundle\Directory\ClassName
@@ -42,11 +42,11 @@ services:
       #$targetDir: '%ideas_images%'
 
   app.mailer:
-    class: IdeasBundle\Service\Mailer
+    class: AppBundle\Service\Mailer
     arguments: ['%app.mailer.transport%']
 
   app.newsletter_manager:
-    class: IdeasBundle\Service\NewsLetterManager
+    class: AppBundle\Service\NewsLetterManager
 #    arguments: ['@app.mailer']
     calls:
      - [setMailer, ['@app.mailer']]

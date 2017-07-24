@@ -2,7 +2,7 @@
 
     namespace IdeasBundle\Form;
 
-    use IdeasBundle\Entity\Keyword;
+    use AppBundle\Entity\Keyword;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;

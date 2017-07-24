@@ -13,10 +13,9 @@
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\Form\Extension\Core\Type\CountryType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use IdeasBundle\Entity\Idea;
+    use AppBundle\Entity\Idea;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-    use IdeasBundle\Type\TagsType;
     use IdeasBundle\Form\KeywordType;
     
     class IdeaType extends AbstractType {
