@@ -2,12 +2,27 @@
 
 namespace IdeasApiBundle\Controller;
 
+use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializationContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Response;
+use FOS\RestBundle\Context\Context;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\FOSRestController;
+use AppBundle\Entity\Idea;
 
 class IdeasController extends FOSRestController
 {
+
+    /**
+     * @return array
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200 = "Successful geting of ideas list"
+     *     }
+     * )
+     */
     public function getAllAction()
     {
         $ideas_repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
@@ -17,24 +32,20 @@ class IdeasController extends FOSRestController
             ['title' => 'ASC']
         );
 
-        $view = $this->view($ideas, 200);
-
-        return $this->handleView($view);
-
+        return $ideas;
     }
 
-    public function getAction($idea_id)
+    public function getAction(int $idea_id)
     {
-        return $this->render('IdeasApiBundle:Idea:get.html.twig', array(
-            // ...
-        ));
+        $ideas_repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
+        $idea = $ideas_repository->find($idea_id);
+        return $idea;
     }
 
-    public function addIdeaAction()
+    public function addAction($id)
     {
-        return $this->render('IdeasApiBundle:Idea:add.html.twig', array(
-            // ...
-        ));
+        $idea = new Idea();
+        return $id;
     }
 
     public function updateAction($idea_id)

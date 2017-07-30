@@ -2,6 +2,10 @@ api:
     resource: "@IdeasApiBundle/Resources/config/routing.yml"
     prefix:   /
 
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
 overview:
   path: /ideas/overview
   defaults: { _controller: IdeasBundle:Ideas:overview}

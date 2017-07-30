@@ -102,3 +102,40 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+
+fos_rest:
+    body_listener: true
+    param_fetcher_listener: true
+    view:
+        view_response_listener: 'force'
+        #exception_wrapper_handler:  null
+        formats:
+            jsonp: true
+            json: true
+            xml: false
+            rss: false
+        mime_types:
+            json: ['application/json', 'application/x-json']
+            jpg: 'image/jpeg'
+            png: 'image/png'
+        jsonp_handler: ~
+    routing_loader:
+        default_format:  json
+        include_format:  false
+    format_listener:
+        rules:
+            - { path: ^/, priorities: [ json, jsonp ], fallback_format: ~, prefer_extension: true }
+    exception:
+        enabled: true
+
+nelmio_api_doc: ~
+
+nelmio_cors:
+  defaults:
+    allow_origin: ["*"]
+    allow_methods: ["POST", "PUT", "GET", "DELETE", "OPTIONS"]
+    allow_headers: ["content-type", "authorization"]
+    max_age:       3600
+  paths:
+    '^/': ~

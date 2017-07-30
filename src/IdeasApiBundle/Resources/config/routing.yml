@@ -6,9 +6,11 @@ get_ideas:
 get_idea:
     path:     /api/ideas/get/{idea_id}
     defaults: { _controller: IdeasApiBundle:Ideas:get }
+    requirements:
+      idea_id: '\d+'
 
 add_idea:
-    path:     /api/add_idea
+    path:     /api/ideas/add/{id}
     defaults: { _controller: IdeasApiBundle:Ideas:add }
 
 update:
