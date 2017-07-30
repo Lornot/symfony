@@ -1,6 +1,6 @@
 <?php
 
-    namespace IdeasBundle\Form;
+    namespace AppBundle\Form;
     
     //use Doctrine\DBAL\Types\IntegerType;
     use Symfony\Component\Form\AbstractType;
@@ -37,13 +37,13 @@
                         'pattern' => false
                     ]
                 ])
-                ->add('keywords', CollectionType::class, [
+                /*->add('keywords', CollectionType::class, [
                     'entry_type' => KeywordType::class,
                     'allow_add'  => true,
                     'allow_delete' => true,
                     'by_reference' => false,
                     'required'   => false
-                ])
+                ])*/
                 ->add('attractiveness', IntegerType::class, [
                     'required' => false,
                     'attr' => [
@@ -51,7 +51,6 @@
                         'pattern' => false
                     ]
                 ])
-                ->add('created_at', DateType::class)
                 ->add('image', FileType::class, [
                     'required' => false
                 ])

@@ -5,7 +5,7 @@
     use Doctrine\Common\Collections\ArrayCollection;
     use AppBundle\Entity\Idea;
     use AppBundle\Entity\Keyword;
-    use IdeasBundle\Form\IdeaType;
+    use AppBundle\Form\IdeaType;
     use IdeasBundle\Form\KeywordType;
     use AppBundle\Service\FileUploader;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -92,11 +92,8 @@
             //$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page');
 
             $idea = new Idea();
-            $idea->setCreatedAt(new \DateTime());
-
             $form = $this->createForm(IdeaType::class, $idea);
             $form->handleRequest($request);
-            
 
             if ($form->isSubmitted() && $form->isValid()) {
 

@@ -29,4 +29,5 @@ AppBundle\Entity\Idea:
             type: string
             length: 255
             nullable: true
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+      prePersist: [setCreatedAt]

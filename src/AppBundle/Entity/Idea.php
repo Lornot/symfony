@@ -34,10 +34,9 @@ class Idea
     protected $keywords;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Type("\DateTime")
      */
-    protected $created_at;
+    public $created_at;
 
     /**
      * @var integer
@@ -100,11 +99,11 @@ class Idea
 
     public function getCreatedAt()
     {
-        return $this -> created_at;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at) {
-        $this->created_at = $created_at;
+    public function setCreatedAt() {
+        $this->created_at = new \DateTime();
     }
 
     public function addKeyword(Keyword $keyword)
@@ -173,4 +172,6 @@ class Idea
     {
         return $this->image;
     }
+
+
 }

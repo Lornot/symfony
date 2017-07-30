@@ -10,9 +10,13 @@ get_idea:
       idea_id: '\d+'
 
 add_idea:
-    path:     /api/ideas/add/{id}
+    path:     /api/ideas/add
     defaults: { _controller: IdeasApiBundle:Ideas:add }
 
 update:
     path:     /api/ideas/update/{idea_id}
     defaults: { _controller: IdeasApiBundle:Ideas:update }
+
+remove:
+    path:     /api/ideas/remove/{idea_id}
+    defaults: { _controller: IdeasApiBundle:Ideas:remove }
