@@ -51,9 +51,9 @@
                         'pattern' => false
                     ]
                 ])
-                ->add('image', FileType::class, [
+                /*->add('image', FileType::class, [
                     'required' => false
-                ])
+                ])*/
                 ->add('save', SubmitType::class, ['label' => 'Save']);
 
         }

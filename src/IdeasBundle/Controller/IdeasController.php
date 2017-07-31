@@ -168,8 +168,6 @@
 
                 }
 
-
-
                 $fileUploader = $this->get('app.file_uploader');
                 $file = $idea->getImage();
                 if ($file) {

@@ -60,11 +60,14 @@ class IdeasController extends FOSRestController
         }
         $idea = $form->getData();
         $manager = $this->getDoctrine()->getManager();
-        foreach ($data['keywords'] as $keyword) {
-            $keywordObject = new Keyword();
-            $keywordObject->setName($keyword['text']);
-            $keywordObject->setIdea($idea);
-            $manager->persist($keywordObject);
+
+        if (isset($data['keywords'])) {
+            foreach ($data['keywords'] as $keyword) {
+                $keywordObject = new Keyword();
+                $keywordObject->setName($keyword['text']);
+                $keywordObject->setIdea($idea);
+                $manager->persist($keywordObject);
+            }
         }
 
         $manager->persist($idea);
@@ -80,38 +83,65 @@ class IdeasController extends FOSRestController
 
     public function updateAction(Request $request, $idea_id)
     {
+
         $manager = $this->getDoctrine()->getManager();
         $ideas_repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
-        $idea = $ideas_repository->find($idea_id);
-
-        $form = $this->createForm(IdeaType::class, $idea, [
-            'csrf_protection' => false
-        ]);
-
         $data = $request->request->all();
-        $form->submit($data);
 
-        if (!$form->isValid()) {
-            return $form;
+        $current_idea = $ideas_repository->find($idea_id);
+
+        if ($data) {
+            $form = $this->createForm(IdeaType::class, null, [
+                'csrf_protection' => false
+            ]);
+
+            //return $data;
+
+            $file = $data->getImage();
+            if ($file) {
+                $fileUploader = $this->get('app.file_uploader');
+                $fileName = $fileUploader->upload($file);
+                $current_idea->setImage($fileName);
+            }
+
+            $form->submit($data);
+
+            if (!$form->isValid()) {
+                return $form;
+            }
+
+            foreach ($data['keywords'] as $keyword) {
+                $keywordObject = new Keyword();
+                $keywordObject->setName($keyword['text']);
+                $keywordObject->setIdea($current_idea);
+                $manager->persist($keywordObject);
+            }
+
+            $current_idea->setTitle($new_idea->getTitle());
+            $current_idea->setKeywords($new_idea->getKeywords());
+            $current_idea->setDescription($new_idea->getDescription());
+            $current_idea->setAttractiveness($new_idea->getAttractiveness());
+            $current_idea->setCreatedAt($new_idea->getCreatedAt());
+
+            $manager->persist($current_idea);
+            $manager->flush();
+
+        } else {
+
+
+            $form = $this->createForm(IdeaType::class, $current_idea, [
+                'csrf_protection' => false
+            ]);
+
+            $routeOptions = [
+                'idea_id' => $current_idea->getId(),
+                '_format' => $request->get('_format'),
+            ];
+
+            return $this->routeRedirectView('get_idea', $routeOptions, Response::HTTP_CREATED);
         }
-        $idea = $form->getData();
 
-        foreach ($data['keywords'] as $keyword) {
-            $keywordObject = new Keyword();
-            $keywordObject->setName($keyword['text']);
-            $keywordObject->setIdea($idea);
-            $manager->persist($keywordObject);
-        }
 
-        $manager->persist($idea);
-        $manager->flush();
-
-        $routeOptions = [
-            'idea_id' => $idea->getId(),
-            '_format' => $request->get('_format'),
-        ];
-
-        return $this->routeRedirectView('get_idea', $routeOptions, Response::HTTP_CREATED);
     }
 
     public function removeAction($idea_id)
