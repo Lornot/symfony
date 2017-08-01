@@ -83,7 +83,6 @@ class IdeasController extends FOSRestController
 
     public function updateAction(Request $request, $idea_id)
     {
-
         $manager = $this->getDoctrine()->getManager();
         $ideas_repository = $this->getDoctrine()->getRepository('AppBundle:Idea');
         $data = $request->request->all();
@@ -97,12 +96,12 @@ class IdeasController extends FOSRestController
 
             //return $data;
 
-            $file = $data->getImage();
+            /*$file = $data->getImage();
             if ($file) {
                 $fileUploader = $this->get('app.file_uploader');
                 $fileName = $fileUploader->upload($file);
                 $current_idea->setImage($fileName);
-            }
+            }*/
 
             $form->submit($data);
 
@@ -110,38 +109,38 @@ class IdeasController extends FOSRestController
                 return $form;
             }
 
+            $current_keywords = $current_idea->getKeywords();
+
             foreach ($data['keywords'] as $keyword) {
-                $keywordObject = new Keyword();
-                $keywordObject->setName($keyword['text']);
-                $keywordObject->setIdea($current_idea);
-                $manager->persist($keywordObject);
+                if (!isset($keyword['id'])) {
+                    $keywordObject = new Keyword();
+                    $keywordObject->setName($keyword['name']);
+                    $keywordObject->setIdea($current_idea);
+                    $manager->persist($keywordObject);
+                }
             }
 
-            $current_idea->setTitle($new_idea->getTitle());
-            $current_idea->setKeywords($new_idea->getKeywords());
-            $current_idea->setDescription($new_idea->getDescription());
-            $current_idea->setAttractiveness($new_idea->getAttractiveness());
-            $current_idea->setCreatedAt($new_idea->getCreatedAt());
+            $new_keywords_ids = array_column($data['keywords'], 'id');
+
+            /** remove current keyword if it is not in the list of keyword from client */
+            foreach ($current_keywords as $current_keyword) {
+                if (!in_array($current_keyword->getId(), $new_keywords_ids)) {
+                    $keyword = $manager->find(Keyword::class, $current_keyword->getId());
+                    $manager->remove($keyword);
+                    $manager->flush();
+                }
+            }
+
+            /** @todo refactor me, please */
+            $current_idea->setTitle($data['title']);
+            $current_idea->setDescription($data['description']);
+            if (isset($data['attractiveness']))
+            $current_idea->setAttractiveness($data['attractiveness']);
 
             $manager->persist($current_idea);
             $manager->flush();
 
-        } else {
-
-
-            $form = $this->createForm(IdeaType::class, $current_idea, [
-                'csrf_protection' => false
-            ]);
-
-            $routeOptions = [
-                'idea_id' => $current_idea->getId(),
-                '_format' => $request->get('_format'),
-            ];
-
-            return $this->routeRedirectView('get_idea', $routeOptions, Response::HTTP_CREATED);
         }
-
-
     }
 
     public function removeAction($idea_id)
